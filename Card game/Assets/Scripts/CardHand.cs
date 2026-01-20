@@ -1,16 +1,17 @@
 using System.Collections.Generic;
 using DG.Tweening;
-using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.Splines;
 
 public class Handmanager : MonoBehaviour
 {
     [SerializeField] private int maxHandSize;
-    [SerializeField] private GameObject cardPrefab;
+    [SerializeField] private CardView cardPrefab;
     [SerializeField] private SplineContainer splinecontainer;
     [SerializeField] private Transform spawnPoint;
-    private List<GameObject> handCards = new();
+    private readonly List<CardView> handCards = new();
+
+    public int Count => handCards.Count;
 
     private void Update()
     {
@@ -21,9 +22,23 @@ public class Handmanager : MonoBehaviour
     public void DrawCard()
     {
         if (handCards.Count >= maxHandSize) return;
-        GameObject g = Instantiate(cardPrefab, spawnPoint.position, spawnPoint.rotation);
-        handCards.Add(g);
+
+        CardView view = Instantiate(cardPrefab, spawnPoint.position, spawnPoint.rotation);
+        handCards.Add(view);
         UpdateCadPositions();
+    }
+
+    public bool DrawCard(Deck deck)
+    {
+        if (handCards.Count >= maxHandSize) return false;
+        if (deck == null) return false;
+        if (!deck.TryDraw(out CardData data)) return false;
+
+        CardView view = Instantiate(cardPrefab, spawnPoint.position, spawnPoint.rotation);
+        view.Init(data);
+        handCards.Add(view);
+        UpdateCadPositions();
+        return true;
     }
 
     private void UpdateCadPositions()
@@ -39,8 +54,9 @@ public class Handmanager : MonoBehaviour
             Vector3 foward = spline.EvaluateTangent(p);
             Vector3 up = spline.EvaluateUpVector(p);
             Quaternion rotation = Quaternion.LookRotation(up, Vector3.Cross (up, foward));
-            handCards[i].transform.DOMove(splinePosition, 0.25f);
-            handCards[i].transform.DORotateQuaternion(rotation, 0.25f);
+                        Transform t = handCards[i].transform;
+                        t.DOMove(splinePosition, 0.25f);
+                        t.DORotateQuaternion(rotation, 0.25f);
         }
     }
 }
