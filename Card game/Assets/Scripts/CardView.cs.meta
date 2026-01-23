@@ -1,2 +1,16 @@
 fileFormatVersion: 2
 guid: 5412342c74352f54aa0d0a6bbe25c2fd
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - backgroundImage: {fileID: 7197401522174521877, guid: 3a9a7b3e919db9746b7b803dd1e52af8, type: 3}
+  - suitIconImage: {fileID: 6700621102773562498, guid: 4348af9177e7f7f43bb43f5d2baa2183, type: 3}
+  - rankText: {fileID: 4164739701112241494, guid: e1f98f866931aed49bc592b008556ee1, type: 3}
+  - cardBackground: {fileID: 21300000, guid: 3f970b15e0ae1884a96f0b9b18651eb8, type: 3}
+  - suitIcons: {fileID: 11400000, guid: cd49268462960944a96403bcbeeb2b90, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

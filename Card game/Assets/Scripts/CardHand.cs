@@ -28,18 +28,7 @@ public class Handmanager : MonoBehaviour
         UpdateCadPositions();
     }
 
-    public bool DrawCard(Deck deck)
-    {
-        if (handCards.Count >= maxHandSize) return false;
-        if (deck == null) return false;
-        if (!deck.TryDraw(out CardData data)) return false;
 
-        CardView view = Instantiate(cardPrefab, spawnPoint.position, spawnPoint.rotation);
-        view.Init(data);
-        handCards.Add(view);
-        UpdateCadPositions();
-        return true;
-    }
 
     private void UpdateCadPositions()
     {
