@@ -10,18 +10,21 @@ public class CardView : MonoBehaviour
     [SerializeField] private Image suitIconImageTR;
     [SerializeField] private Image suitIconImageBL;
     [SerializeField] private TMP_Text rankText;
-    
+    private Deck deck;
+
 
     [Header("Art")]
     [SerializeField] private CardSO cardSO;
 
 
-     private void Start() 
-     {
+    private void Start()
+    {
+        deck = FindFirstObjectByType<Deck>();
+        RandomCardSelector();
         rankText.text = cardSO.cardNumber.ToString();
         suitIconImageTR.sprite = cardSO.cardSuit;
         suitIconImageBL.sprite = cardSO.cardSuit;
-     }
+    }
 
 
 
@@ -36,4 +39,10 @@ public class CardView : MonoBehaviour
     //         _ => ((int)rank).ToString()
     //     };
     // }
+
+    private void RandomCardSelector()
+    {
+        int randomIndex = Random.Range(0, deck.deckOfCards.Count);
+        cardSO = deck.deckOfCards[randomIndex];
+    }
 }

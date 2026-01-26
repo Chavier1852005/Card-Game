@@ -48,4 +48,6 @@ public class Handmanager : MonoBehaviour
                         t.DORotateQuaternion(rotation, 0.25f);
         }
     }
+
+
 }
