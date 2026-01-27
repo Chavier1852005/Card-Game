@@ -3,19 +3,48 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
+    public static GameManager Instance { get; private set; }
     private Turn Current_Turn;
     public enum Turn
     {
         Player, Enemy
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    public UICardSelectable SelectedCard { get; private set; }
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     void Start()
     {
         Current_Turn = Turn.Player;
     }
 
-    // Update is called once per frame
+    public void SelectCard(UICardSelectable card)
+    {
+        if (card == null) return;
+
+        if (SelectedCard == card)
+        {
+            SelectedCard.SetSelected(false);
+            SelectedCard = null;
+            return;
+        }
+        if (SelectedCard != null)
+           SelectedCard.SetSelected(false);
+
+        SelectedCard = card;
+        SelectedCard.SetSelected(true);
+
+        Debug.Log($"Selected: {card.name}");
+    }
     void Update()
     {
 
