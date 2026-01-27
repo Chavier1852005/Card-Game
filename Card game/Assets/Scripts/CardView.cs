@@ -11,6 +11,7 @@ public class CardView : MonoBehaviour
     [SerializeField] private Image suitIconImageBL;
     [SerializeField] private TMP_Text rankText;
     private Deck deck;
+    private GameManager gameManager;
 
 
     [Header("Art")]
@@ -19,6 +20,7 @@ public class CardView : MonoBehaviour
 
     private void Start()
     {
+        gameManager = FindFirstObjectByType<GameManager>();
         deck = FindFirstObjectByType<Deck>();
         RandomCardSelector();
         rankText.text = cardSO.cardNumber.ToString();
@@ -44,5 +46,11 @@ public class CardView : MonoBehaviour
     {
         int randomIndex = Random.Range(0, deck.deckOfCards.Count);
         cardSO = deck.deckOfCards[randomIndex];
+        deck.deckOfCards.RemoveAt(randomIndex);
+    }
+
+   public void SelectCard()
+    {
+        
     }
 }
