@@ -6,12 +6,13 @@ public class Enemy : MonoBehaviour
     [Header("Stats")]
     [SerializeField] private string enemyName = "Enemy";
     [SerializeField] private int maxHP = 100;
+    [SerializeField] private int currentHP = 100;
     [SerializeField] private int attack = 5;
     [SerializeField] private int armor = 0;
 
     public string EnemyName => enemyName;
     public int MaxHP => maxHP;
-    public int HP { get; private set; }
+    public int HP => currentHP;
     public int Attack => attack;
     public int Armor => armor;
 
@@ -20,9 +21,23 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        HP = Mathf.Clamp(HP, 0, maxHP);
-        if (HP == 0) HP = maxHP;
+        ClampHp();
         OnStatsChanged?.Invoke(this);
+    }
+
+    private void OnValidate()
+    {
+        // Editor/Inspector wijzigingen (ook tijdens Play Mode)
+        ClampHp();
+
+        if (Application.isPlaying)
+            OnStatsChanged?.Invoke(this);
+    }
+
+    private void ClampHp()
+    {
+        if (maxHP < 1) maxHP = 1;
+        currentHP = Mathf.Clamp(currentHP, 0, maxHP);
     }
 
     public void TakeDamage(int amount)
@@ -30,17 +45,17 @@ public class Enemy : MonoBehaviour
         amount = Mathf.Max(0, amount);
         int final = Mathf.Max(0, amount - armor);
 
-        HP = Mathf.Max(0, HP - final);
+        currentHP = Mathf.Max(0, currentHP - final);
         OnStatsChanged?.Invoke(this);
 
-        if (HP == 0)
+        if (currentHP == 0)
             OnDeath?.Invoke(this);
     }
 
     public void Heal(int amount)
     {
         amount = Mathf.Max(0, amount);
-        HP = Mathf.Min(maxHP, HP + amount);
+        currentHP = Mathf.Min(maxHP, currentHP + amount);
         OnStatsChanged?.Invoke(this);
     }
 }
