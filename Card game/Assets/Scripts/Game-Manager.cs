@@ -4,13 +4,14 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    private Turn Current_Turn;
-    public enum Turn
-    {
-        Player, Enemy
-    }
 
-    public UICardSelectable SelectedCard { get; private set; }
+    // Multiple card selection (same suit)
+    private readonly HashSet<UICardSelectable> selectedCards = new();
+    public IReadOnlyCollection<UICardSelectable> SelectedCards => selectedCards;
+
+    // Active suit for the current selection
+    public Sprite SelectedSuitSprite { get; private set; }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -22,50 +23,53 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    void Start()
-    {
-        Current_Turn = Turn.Player;
-    }
-
-    public void SelectCard(UICardSelectable card)
+    public void ToggleSelectCard(UICardSelectable card)
     {
         if (card == null) return;
 
-        if (SelectedCard == card)
+        Sprite suitSprite = card.SuitSprite;
+        if (suitSprite == null)
         {
-            SelectedCard.SetSelected(false);
-            SelectedCard = null;
+            Debug.LogWarning($"Card '{card.name}' has nomsuit");
             return;
         }
-        if (SelectedCard != null)
-           SelectedCard.SetSelected(false);
 
-        SelectedCard = card;
-        SelectedCard.SetSelected(true);
+        // first selection
+        if (SelectedSuitSprite == null)
+            SelectedSuitSprite = suitSprite;
 
-        Debug.Log($"Selected: {card.name}");
-    }
-    void Update()
-    {
-
-    }
-
-    public void SwitchTurn()
-    {
-
-        if (Current_Turn == Turn.Player) { Current_Turn = Turn.Enemy; } else { Current_Turn = Turn.Player; }
-
-        switch (Current_Turn)
+        // if diffrent suit is selected old "group" is removed
+        if (SelectedSuitSprite != suitSprite)
         {
-
-            case Turn.Player:
-                // iets gebeurt ja nee dat dus
-                break;
-            case Turn.Enemy:
-                // en hier ook misschien ooit iets
-                break;
-
+            ClearSelection();
+            SelectedSuitSprite = suitSprite;
         }
 
+        // toggle selection
+        if (selectedCards.Contains(card))
+        {
+            selectedCards.Remove(card);
+            card.SetSelected(false);
+        }
+        else
+        {
+            selectedCards.Add(card);
+            card.SetSelected(true);
+        }
+
+        // nothing selected anymore
+        if (selectedCards.Count == 0)
+            SelectedSuitSprite = null;
+
+        Debug.Log($"Selected Suit Sprite: {(SelectedSuitSprite != null ? SelectedSuitSprite.name : "None")} | Count: {selectedCards.Count}");
+    }
+
+    public void ClearSelection()
+    {
+        foreach (var c in selectedCards)
+            c.SetSelected(false);
+
+        selectedCards.Clear();
+        SelectedSuitSprite = null;
     }
 }

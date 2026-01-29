@@ -23,15 +23,4 @@ public class CardSO : ScriptableObject
     public Sprite cardSuit;
 
     public int cardNumber;
-
-
-
-
-
-
-
-
-
-
-
 }
