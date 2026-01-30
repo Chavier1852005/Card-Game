@@ -5,13 +5,33 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    // Multiple card selection (same suit)
+    // Multiple card selection
     private readonly HashSet<UICardSelectable> selectedCards = new();
     public IReadOnlyCollection<UICardSelectable> SelectedCards => selectedCards;
 
     // Active suit for the current selection
     public Sprite SelectedSuitSprite { get; private set; }
 
+
+    public int GetSelectedDamageTotal()
+    {
+        int total = 0;
+        foreach (var c in selectedCards)
+            total += c != null ? c.Damage : 0;
+
+        return total;
+    }
+
+    public void UseSelectedCardsOn(Enemy enemy)
+    {
+        if (enemy == null) return;
+        int damage = GetSelectedDamageTotal();
+        if (damage <= 0) return;
+
+        enemy.TakeDamage(damage);
+        ClearSelection();
+        Debug.Log($"Damage {damage} done to {enemy.EnemyName}");
+    }
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -38,7 +58,7 @@ public class GameManager : MonoBehaviour
         if (SelectedSuitSprite == null)
             SelectedSuitSprite = suitSprite;
 
-        // if diffrent suit is selected old "group" is removed
+        // if diffrent suit is selected selection is thanos snapped
         if (SelectedSuitSprite != suitSprite)
         {
             ClearSelection();

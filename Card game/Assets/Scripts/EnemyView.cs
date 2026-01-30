@@ -8,7 +8,7 @@ public class EnemyView : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private TMP_Text nameText;
-    // [SerializeField] private TMP_Text statsText;
+    [SerializeField] private TMP_Text statsText;
     [SerializeField] private Image hpFill; // optional
 
     private void Awake()
@@ -50,8 +50,8 @@ public class EnemyView : MonoBehaviour
         if (nameText != null)
             nameText.text = enemy.EnemyName;
 
-        // if (statsText != null)
-        //     statsText.text = $"HP: {enemy.HP}/{enemy.MaxHP}\nATK: {enemy.Attack}\nARM: {enemy.Armor}";
+        if (statsText != null)
+            statsText.text = $"HP: {enemy.HP}/{enemy.MaxHP}\nATK: {enemy.Attack}\nARM: {enemy.Armor}";
 
         if (hpFill != null)
             hpFill.fillAmount = enemy.MaxHP > 0 ? (float)enemy.HP / enemy.MaxHP : 0f;

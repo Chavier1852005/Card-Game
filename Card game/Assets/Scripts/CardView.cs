@@ -13,6 +13,7 @@ public class CardView : MonoBehaviour
     [Header("Art")]
     [SerializeField] private CardSO cardSO;
 
+    public int CardNumber => cardSO != null ? cardSO.cardNumber : 0;
     public Sprite SuitSprite => cardSO != null ? cardSO.cardSuit : null;
 
     private void Start()

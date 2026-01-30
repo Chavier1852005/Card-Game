@@ -11,6 +11,7 @@ public class UICardSelectable : MonoBehaviour, IPointerClickHandler
     private Vector2 baseAnchoredPos;
 
     public Sprite SuitSprite => cardView != null ? cardView.SuitSprite : null;
+    public int Damage => cardView != null ? cardView.CardNumber : 0;
 
     private void Awake()
     {

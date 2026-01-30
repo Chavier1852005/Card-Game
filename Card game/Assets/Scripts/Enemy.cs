@@ -27,7 +27,6 @@ public class Enemy : MonoBehaviour
 
     private void OnValidate()
     {
-        // Editor/Inspector wijzigingen (ook tijdens Play Mode)
         ClampHp();
 
         if (Application.isPlaying)
