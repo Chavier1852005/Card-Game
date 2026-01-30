@@ -13,23 +13,32 @@ public class CardView : MonoBehaviour
     [Header("Art")]
     [SerializeField] private CardSO cardSO;
 
+    public CardSO CardData => cardSO;
     public int CardNumber => cardSO != null ? cardSO.cardNumber : 0;
     public Sprite SuitSprite => cardSO != null ? cardSO.cardSuit : null;
 
     private void Start()
     {
         deck = FindFirstObjectByType<Deck>();
-        RandomCardSelector();
-
-        rankText.text = cardSO.cardNumber.ToString();
-        suitIconImageTR.sprite = cardSO.cardSuit;
-        suitIconImageBL.sprite = cardSO.cardSuit;
+        
+        if (cardSO == null && deck != null && deck.TryDraw(out var so))
+        cardSO = so;
+        
+        RefreshUI();
     }
 
-    private void RandomCardSelector()
+    public void SetCard(CardSO newCard)
     {
-        int randomIndex = Random.Range(0, deck.deckOfCards.Count);
-        cardSO = deck.deckOfCards[randomIndex];
-        deck.deckOfCards.RemoveAt(randomIndex);
+        cardSO = newCard;
+        RefreshUI();
+    }
+
+    private void RefreshUI()
+    {
+        if (cardSO == null) return;
+
+        if (rankText != null) rankText.text = cardSO.cardNumber.ToString();
+        if (suitIconImageTR != null) suitIconImageTR.sprite = cardSO.cardSuit;
+        if (suitIconImageBL != null) suitIconImageBL.sprite = cardSO.cardSuit;
     }
 }

@@ -5,6 +5,7 @@ public class UICardSelectable : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private CardView cardView;
 
+    public CardView View => cardView;
     public bool IsSelected { get; private set; }
 
     private RectTransform rt;

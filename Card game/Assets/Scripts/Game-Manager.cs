@@ -12,6 +12,22 @@ public class GameManager : MonoBehaviour
     // Active suit for the current selection
     public Sprite SelectedSuitSprite { get; private set; }
 
+    [SerializeField] private Handmanager hand;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(this.gameObject);
+
+        if (hand == null)
+            hand = FindFirstObjectByType<Handmanager>();
+    }
 
     public int GetSelectedDamageTotal()
     {
@@ -25,22 +41,29 @@ public class GameManager : MonoBehaviour
     public void UseSelectedCardsOn(Enemy enemy)
     {
         if (enemy == null) return;
+
         int damage = GetSelectedDamageTotal();
         if (damage <= 0) return;
 
+        // Snapshot voor ClearSelection, anders weet je niet meer welke kaarten je gebruikte
+        var toReplace = new List<UICardSelectable>(selectedCards);
+
         enemy.TakeDamage(damage);
         ClearSelection();
-        Debug.Log($"Damage {damage} done to {enemy.EnemyName}");
-    }
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
+
+        if (hand == null)
+            hand = FindFirstObjectByType<Handmanager>();
+
+        if (hand != null)
         {
-            Destroy(this.gameObject);
-            return;
+            foreach (var s in toReplace)
+            {
+                if (s != null && s.View != null)
+                    hand.ReplaceCard(s.View);
+            }
         }
-        Instance = this;
-        DontDestroyOnLoad(this.gameObject);
+
+        Debug.Log($"Damage {damage} done to {enemy.EnemyName}");
     }
 
     public void ToggleSelectCard(UICardSelectable card)
@@ -50,22 +73,22 @@ public class GameManager : MonoBehaviour
         Sprite suitSprite = card.SuitSprite;
         if (suitSprite == null)
         {
-            Debug.LogWarning($"Card '{card.name}' has nomsuit");
+            Debug.LogWarning($"Card '{card.name}' has no suit sprite.");
             return;
         }
 
-        // first selection
+        // First selection starts a group
         if (SelectedSuitSprite == null)
             SelectedSuitSprite = suitSprite;
 
-        // if diffrent suit is selected selection is thanos snapped
+        // Different suit clicked clear and start new group
         if (SelectedSuitSprite != suitSprite)
         {
             ClearSelection();
             SelectedSuitSprite = suitSprite;
         }
 
-        // toggle selection
+        // Toggle selection
         if (selectedCards.Contains(card))
         {
             selectedCards.Remove(card);
@@ -77,7 +100,7 @@ public class GameManager : MonoBehaviour
             card.SetSelected(true);
         }
 
-        // nothing selected anymore
+        // Nothing selected anymore
         if (selectedCards.Count == 0)
             SelectedSuitSprite = null;
 
@@ -87,7 +110,7 @@ public class GameManager : MonoBehaviour
     public void ClearSelection()
     {
         foreach (var c in selectedCards)
-            c.SetSelected(false);
+            if (c != null) c.SetSelected(false);
 
         selectedCards.Clear();
         SelectedSuitSprite = null;

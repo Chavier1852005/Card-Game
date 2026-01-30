@@ -210,7 +210,7 @@ PrefabInstance:
     - target: {fileID: 6913453058918754862, guid: 7f8945f98bf64144cb2d77058b9f126e, type: 3}
       propertyPath: cardSO
       value: 
-      objectReference: {fileID: 11400000, guid: c7b4d673ba6a79d448ded10547e73810, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 8875449427277401284, guid: 7f8945f98bf64144cb2d77058b9f126e, type: 3}
       propertyPath: m_Name
       value: CardEmpty (7)
@@ -644,7 +644,7 @@ PrefabInstance:
     - target: {fileID: 6913453058918754862, guid: 7f8945f98bf64144cb2d77058b9f126e, type: 3}
       propertyPath: cardSO
       value: 
-      objectReference: {fileID: 11400000, guid: c7b4d673ba6a79d448ded10547e73810, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 8875449427277401284, guid: 7f8945f98bf64144cb2d77058b9f126e, type: 3}
       propertyPath: m_Name
       value: CardEmpty (2)
@@ -893,7 +893,7 @@ PrefabInstance:
     - target: {fileID: 6913453058918754862, guid: 7f8945f98bf64144cb2d77058b9f126e, type: 3}
       propertyPath: cardSO
       value: 
-      objectReference: {fileID: 11400000, guid: c7b4d673ba6a79d448ded10547e73810, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 8875449427277401284, guid: 7f8945f98bf64144cb2d77058b9f126e, type: 3}
       propertyPath: m_Name
       value: CardEmpty (1)
@@ -1047,7 +1047,7 @@ GameObject:
   - component: {fileID: 477651265}
   - component: {fileID: 477651264}
   m_Layer: 0
-  m_Name: CardsManager
+  m_Name: HandManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1069,6 +1069,7 @@ MonoBehaviour:
   cardPrefab: {fileID: 6913453058918754862, guid: 7f8945f98bf64144cb2d77058b9f126e, type: 3}
   splinecontainer: {fileID: 1739171338}
   spawnPoint: {fileID: 124888621}
+  deck: {fileID: 1200810360}
 --- !u!4 &477651265
 Transform:
   m_ObjectHideFlags: 0
@@ -1317,7 +1318,7 @@ PrefabInstance:
     - target: {fileID: 6913453058918754862, guid: 7f8945f98bf64144cb2d77058b9f126e, type: 3}
       propertyPath: cardSO
       value: 
-      objectReference: {fileID: 11400000, guid: c7b4d673ba6a79d448ded10547e73810, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 8875449427277401284, guid: 7f8945f98bf64144cb2d77058b9f126e, type: 3}
       propertyPath: m_Name
       value: CardEmpty (4)
@@ -1566,7 +1567,7 @@ PrefabInstance:
     - target: {fileID: 6913453058918754862, guid: 7f8945f98bf64144cb2d77058b9f126e, type: 3}
       propertyPath: cardSO
       value: 
-      objectReference: {fileID: 11400000, guid: c7b4d673ba6a79d448ded10547e73810, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 8875449427277401284, guid: 7f8945f98bf64144cb2d77058b9f126e, type: 3}
       propertyPath: m_Name
       value: CardEmpty (3)
@@ -1749,7 +1750,7 @@ PrefabInstance:
     - target: {fileID: 6913453058918754862, guid: 7f8945f98bf64144cb2d77058b9f126e, type: 3}
       propertyPath: cardSO
       value: 
-      objectReference: {fileID: 11400000, guid: c7b4d673ba6a79d448ded10547e73810, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 8875449427277401284, guid: 7f8945f98bf64144cb2d77058b9f126e, type: 3}
       propertyPath: m_Name
       value: CardEmpty (6)
@@ -1910,6 +1911,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede9b47848fca204e97a53e1284d2ca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  hand: {fileID: 0}
 --- !u!4 &1156275130
 Transform:
   m_ObjectHideFlags: 0
@@ -2597,7 +2599,7 @@ PrefabInstance:
     - target: {fileID: 6913453058918754862, guid: 7f8945f98bf64144cb2d77058b9f126e, type: 3}
       propertyPath: cardSO
       value: 
-      objectReference: {fileID: 11400000, guid: c7b4d673ba6a79d448ded10547e73810, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 8875449427277401284, guid: 7f8945f98bf64144cb2d77058b9f126e, type: 3}
       propertyPath: m_Name
       value: CardEmpty (5)
@@ -2977,7 +2979,7 @@ PrefabInstance:
     - target: {fileID: 6913453058918754862, guid: 7f8945f98bf64144cb2d77058b9f126e, type: 3}
       propertyPath: cardSO
       value: 
-      objectReference: {fileID: 11400000, guid: bd3bd11cecc2edc48a54fc43c3c85783, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 8875449427277401284, guid: 7f8945f98bf64144cb2d77058b9f126e, type: 3}
       propertyPath: m_Name
       value: CardEmpty
